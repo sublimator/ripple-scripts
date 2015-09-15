@@ -1,6 +1,6 @@
 {
   "name": "@niq/ripple-scripts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ripple scripts",
   "files": [
     "distrib/npm/*",

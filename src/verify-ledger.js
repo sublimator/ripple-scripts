@@ -66,6 +66,6 @@ function main(ledgerFile) {
 }
 
 (function() {
-  const {argv} = yargs.usage('$0 <ledger_dump.json>').demand(1);
+  const {argv} = yargs.usage('verify-ledger <ledger_dump.json>').demand(1);
   main(argv._[0]);
 }());

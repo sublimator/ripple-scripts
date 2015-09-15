@@ -42,7 +42,7 @@ function verifyTxJson(tx_json) {
 (function main(args = process.argv) {
   const [, script, tx_json] = args;
   if (args.length < 3) {
-    const relative = path.relative(process.cwd(), script);
+    const relative = path.basename(script, '.js');
     console.error(`Usage: ${relative} <tx_json>\ne.g:`);
     console.error(`${relative} '${EXAMPLE}'`);
   } else {

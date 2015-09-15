@@ -46,7 +46,7 @@ function signTxJson(secret, tx_json) {
 function main(args = process.argv) {
   const [, script, secret, tx_json] = args;
   if (args.length < 4) {
-    const relative = path.relative(process.cwd(), script);
+    const relative = path.basename(script, '.js');
     console.error(`Usage: ${relative} <secret> <tx_json>\ne.g:`);
     console.error(`${relative} ${EXAMPLE.secret} '${EXAMPLE.tx_json}'`);
   } else {
