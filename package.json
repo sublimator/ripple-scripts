@@ -1,6 +1,6 @@
 {
   "name": "@niq/ripple-scripts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "ripple scripts",
   "files": [
     "distrib/npm/*",
@@ -21,6 +21,7 @@
   "dependencies": {
     "@niq/ripple-core-types": "^0.0.1",
     "@niq/ripple-keypairs": "^0.9.2",
+    "assert-diff": "^1.0.1",
     "babel-runtime": "^5.8.20",
     "lodash": "^3.10.1",
     "ripple-address-codec": "^2.0.0",
