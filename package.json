@@ -1,0 +1,67 @@
+{
+  "name": "@niq/ripple-scripts",
+  "version": "0.0.1",
+  "description": "ripple scripts",
+  "files": [
+    "distrib/npm/*",
+    "bin/*",
+    "test/*"
+  ],
+  "main": "distrib/npm/",
+  "directories": {
+    "test": "test"
+  },
+  "bin": {
+    "sign-transaction": "distrib/npm/sign-transaction.js",
+    "sign-transaction-for": "distrib/npm/sign-transaction-for.js",
+    "transaction.db": "distrib/npm/transaction.db.js",
+    "verify-ledger": "distrib/npm/verify-ledger.js",
+    "verify-transaction": "distrib/npm/verify-transaction.js"
+  },
+  "dependencies": {
+    "@niq/ripple-core-types": "^0.0.1",
+    "@niq/ripple-keypairs": "^0.9.2",
+    "babel-runtime": "^5.8.20",
+    "lodash": "^3.10.1",
+    "ripple-address-codec": "^2.0.0",
+    "yargs": "^3.25.0"
+  },
+  "devDependencies": {
+    "codecov.io": "^0.1.6",
+    "assert-diff": "^1.0.1",
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.1",
+    "eslint": "^1.4.1",
+    "eslint-watch": "^2.0.0",
+    "fs-extra": "^0.24.0",
+    "intercept-stdout": "^0.1.2",
+    "istanbul": "~0.3.19",
+    "mocha": "^2.3.2",
+    "node-inspector": "^0.12.3",
+    "ripple-lib": "^0.12.6",
+    "sequelize": "^3.8.0",
+    "sqlite3": "^3.1.0",
+    "yargs": "^3.24.0"
+  },
+  "scripts": {
+    "compile": "babel --optional runtime -d distrib/npm/ src/",
+    "prepublish": "npm test && npm run lint && npm run compile",
+    "test": "istanbul test _mocha",
+    "codecov": "cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js",
+    "lint": "if ! [ -f eslintrc ]; then curl -o eslintrc 'https://raw.githubusercontent.com/ripple/javascript-style-guide/es6/eslintrc'; echo 'parser: babel-eslint' >> eslintrc; fi; eslint -c eslintrc src/*.js test/*.js examples/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sublimator/ripple-scripts-n.git"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "bugs": {
+    "url": "https://github.com/sublimator/ripple-scripts-n/issues"
+  },
+  "homepage": "https://github.com/sublimator/ripple-scripts-n#readme",
+  "author": "ndudfield@gmail.com",
+  "license": "ISC",
+  "readmeFilename": "README.md"
+}
