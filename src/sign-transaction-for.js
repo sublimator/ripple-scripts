@@ -34,21 +34,21 @@ const signerComparator = (a, b) => getSigner(a).compareTo(getSigner(b));
 
 function signTxJson(tx_json, secret, signingAccount = null) {
   const keyPair = getKeyPair(secret);
+  const signerID = signingAccount || keyPair.id();
+  tx_json.SigningPubKey = '';
 
   const signer = {
     Signer: {
       SigningPubKey: toHex(keyPair.publicBytes()),
-      TxnSignature: toHex(keyPair.sign(multiSigningData(tx_json))),
-      Account: signingAccount || keyPair.id()
+      TxnSignature: toHex(keyPair.sign(multiSigningData(tx_json, signerID))),
+      Account: signerID
     }
   };
 
   const signers = tx_json.Signers = tx_json.Signers || [];
   signers.push(signer);
   signers.sort(signerComparator);
-
   const tx = STObject.from(tx_json);
-  tx.SigningPubKey = '';
 
   const serialized = serializeObject(tx);
   const hash = toHex(transactionID(serialized));
