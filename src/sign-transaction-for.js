@@ -4,10 +4,8 @@
 'use strict';
 
 const path = require('path');
-const {AccountID, STObject, binary} = require('@niq/ripple-core-types');
-const {serializeObject, binaryToJSON, bytesToHex, multiSigningData,
-       transactionID} = binary;
-const {keyPairFromSeed, seedFromPhrase} = require('@niq/ripple-keypairs');
+const {signing: {signFor}} = require('@niq/ripple-core');
+const {getKeyPair, prettyJSON} = require('./utils');
 
 const EXAMPLE = {
   secret: 'sEd7t79mzn2dwy3vvpvRmaaLbLhvme6',
@@ -22,45 +20,6 @@ const EXAMPLE = {
   })
 };
 
-function getKeyPair(secret) {
-  const seed = /^s/.test(secret) ? secret : seedFromPhrase(secret);
-  return keyPairFromSeed(seed);
-}
-
-const toHex = v => bytesToHex(v);
-const prettyJSON = obj => JSON.stringify(obj, undefined, 2);
-const getSigner = (o) => AccountID.from(o.Signer.Account);
-const signerComparator = (a, b) => getSigner(a).compareTo(getSigner(b));
-
-function signTxJson(tx_json, secret, signingAccount = null) {
-  const keyPair = getKeyPair(secret);
-  const signerID = signingAccount || keyPair.id();
-  tx_json.SigningPubKey = '';
-
-  const signer = {
-    Signer: {
-      SigningPubKey: toHex(keyPair.publicBytes()),
-      TxnSignature: toHex(keyPair.sign(multiSigningData(tx_json, signerID))),
-      Account: signerID
-    }
-  };
-
-  const signers = tx_json.Signers = tx_json.Signers || [];
-  signers.push(signer);
-  signers.sort(signerComparator);
-  const tx = STObject.from(tx_json);
-
-  const serialized = serializeObject(tx);
-  const hash = toHex(transactionID(serialized));
-  const tx_blob = toHex(serialized);
-
-  return {
-    tx_json: binaryToJSON(tx_blob),
-    tx_blob,
-    hash
-  };
-}
-
 function main(args = process.argv) {
   const [, script, secret, tx_json, signingAccount] = args;
   const relative = path.basename(script, '.js');
@@ -69,7 +28,8 @@ function main(args = process.argv) {
     console.error('e.g:');
     console.error(`${relative} ${EXAMPLE.secret} '${EXAMPLE.tx_json}'`);
   } else {
-    const bundle = signTxJson(JSON.parse(tx_json), secret, signingAccount);
+    const keyPair = getKeyPair(secret);
+    const bundle = signFor(JSON.parse(tx_json), keyPair, signingAccount);
     console.log(prettyJSON(bundle));
     console.error(`${relative} nextSigner '${JSON.stringify(bundle.tx_json)}'`);
   }

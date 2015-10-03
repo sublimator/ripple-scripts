@@ -6,7 +6,7 @@ const yargs = require('yargs');
 const assert = require('assert-diff');
 const _ = require('lodash');
 const Sequelize = require('sequelize');
-const {STObject, binary} = require('@niq/ripple-core-types');
+const {STObject, binary} = require('@niq/ripple-core');
 const {readJSON, serializeObject, makeParser} = binary;
 
 function rekey(obj, mapping) {

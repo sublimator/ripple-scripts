@@ -6,7 +6,7 @@
 const path = require('path');
 const {encodeAccountID} = require('ripple-address-codec');
 const {verify, computePublicKeyHash} = require('@niq/ripple-keypairs');
-const {binary} = require('@niq/ripple-core-types');
+const {binary} = require('@niq/ripple-core');
 const {parseBytes, signingData} = binary;
 
 const EXAMPLE = JSON.stringify({
