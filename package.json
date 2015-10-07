@@ -1,6 +1,6 @@
 {
   "name": "@niq/ripple-scripts",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "ripple scripts",
   "files": [
     "distrib/npm/*",
@@ -16,10 +16,11 @@
     "sign-transaction-for": "distrib/npm/sign-transaction-for.js",
     "transaction.db": "distrib/npm/transaction.db.js",
     "verify-ledger": "distrib/npm/verify-ledger.js",
-    "verify-transaction": "distrib/npm/verify-transaction.js"
+    "verify-transaction": "distrib/npm/verify-transaction.js",
+    "account-keys": "distrib/npm/account-keys.js"
   },
   "dependencies": {
-    "@niq/ripple-core": "^0.0.4",
+    "@niq/ripple-core": "^0.0.5",
     "@niq/ripple-keypairs": "^0.9.2",
     "assert-diff": "^1.0.1",
     "babel-runtime": "^5.8.20",
